@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>GeoCode</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            #map{
+                height: 50%;
+                margin-top: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="floating-panel">
+            <input id="address" type="text" value="Enter your address">
+            <input id="submit" type="button" value="Geocode">
+            
+        </div>
+        
+        <div id="map"></div>
+        
+        <script>
+            function initMap(){
+                var map = new google.maps.Map(document.getElementById('map'),{
+                    zoom:10,
+                    center: {lat:21.009, lng:105.008}
+                });
+                
+                var geocoder = new google.maps.Geocoder();
+                
+                document.getElementById('submit').addEventListener('click',function (){
+                    geoCodeaddress();
+                });
+                
+                function geoCodeaddress(geocoder, resultmap){
+                    var address = document.getElementById('address').value;
+                    geocoder.geocode({'address':address},function(){
+                        if (status === 'OK'){
+                            resultmap.setCenter(results[0].geometry.loction);
+                            var marker = new google.maps.Marker({
+                                map: resultmap,
+                                position: results[0].geometry.location
+                            });
+                        }else{
+                            alert('Nothing');
+                        }
+                    });
+                };
+            }   
+            
+        </script>
+    </body>
+</html>
