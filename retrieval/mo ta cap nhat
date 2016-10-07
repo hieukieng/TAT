@@ -1,0 +1,4 @@
+07/10/2016:
+  - thêm bảng summary gồm các thuộc tính: newsID (foreign key), time (primary key), place, deaths, injuries, reason, vehicles.
+  - sửa kiểu dự liệu ở một vài bảng, xóa thuộc tính contentID trong table newsHeader do contentID và newsID được gán auto_increment
+    (tự động tăng) nên chúng luôn bằng nhau, giúp giảm dữ liệu trong database.
