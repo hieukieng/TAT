@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `newscontent`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `newscontent` (
   `contentID` int(11) NOT NULL AUTO_INCREMENT,
-  `content` mediumtext CHARACTER SET utf8,
+  `content` mediumtext CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`contentID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -39,8 +39,8 @@ DROP TABLE IF EXISTS `newsheader`;
 CREATE TABLE `newsheader` (
   `newsID` int(11) NOT NULL AUTO_INCREMENT,
   `newsTitle` tinytext CHARACTER SET utf8,
-  `newsDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `sourceLink` tinytext CHARACTER SET utf8,
+  `newsDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `sourceLink` tinytext CHARACTER SET utf8 NOT NULL,
   `newsDescription` mediumtext COLLATE utf8_unicode_ci,
   `username` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`newsID`),
@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS `summary`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `summary` (
   `newsID` int(11) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `place` tinytext COLLATE utf8_unicode_ci,
   `deaths` int(11) DEFAULT '0',
   `injuries` int(11) DEFAULT '0',
@@ -94,4 +94,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-07 22:59:50
+-- Dump completed on 2016-10-08  9:28:05
