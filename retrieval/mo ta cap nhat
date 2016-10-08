@@ -2,3 +2,8 @@
   - thêm bảng summary gồm các thuộc tính: newsID (foreign key), time (primary key), place, deaths, injuries, reason, vehicles.
   - sửa kiểu dự liệu ở một vài bảng, xóa thuộc tính contentID trong table newsHeader do contentID và newsID được gán auto_increment
     (tự động tăng) nên chúng luôn bằng nhau, giúp giảm dữ liệu trong database.
+08/10/2016:
+  - upload code java:
+    + phân tích trang web từ địa chỉ URL
+    + ghi thông tin Title, Date, URL, Description, Content vào database
+    + mới chỉ áp dụng cho trang 24h.com.vn
