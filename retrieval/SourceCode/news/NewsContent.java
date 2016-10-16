@@ -23,14 +23,14 @@ import org.jsoup.select.Elements;
  */
 public class NewsContent {
 
-    private String content;
+    private StringBuilder content;
     private Document doc;
 
     public NewsContent() {
     }
 
     public String getContent() {
-        return content;
+        return content.toString();
     }
 
     /**
@@ -42,14 +42,14 @@ public class NewsContent {
             doc = Jsoup.connect(url.toString()).timeout(10000).userAgent("Chrome").get();
 
             Elements element = doc.getElementsByClass("baiviet-sapo");
-            this.content = element.text();
+            this.content.append(element.text());
             
             element = doc.getElementsByClass("text-conent");
             String conent = element.text();
             
             Element lienQuan = doc.getElementsByAttributeValue("class", "baiviet-bailienquan").first();
             
-            this.content += conent.replace(lienQuan.text(), "");
+            this.content.append(conent.replace(lienQuan.text(), ""));
         } catch (IOException ex) {
             System.out.println("Connect error!");
             ex.printStackTrace();
