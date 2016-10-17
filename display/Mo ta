@@ -7,4 +7,5 @@
         + cột left để hiển thị danh sách tin
         + cột right để hiển thị bảng thống kê (số người chết, số người bị thương, số vụ tai nạn ở 1 số thành phố lớn,...)
     - footer
-  # File xuly.php sẽ làm nhiệm vụ hiển thị thông tin chi tiết của bài báo
+  # File xuly.php sẽ làm nhiệm vụ hiển thị thông tin chi tiết của bài báo, khi người dùng click vào ảnh hoặc tiêu đề của bài báo trong 
+  danh sách bài báo ở cột left bên trang chủ thì sẽ chuyển đến file xuly.php để hiển thị thông tin chi tiết của bài báo.
