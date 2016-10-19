@@ -7,3 +7,6 @@
     + phân tích trang web từ địa chỉ URL
     + ghi thông tin Title, Date, URL, Description, Content vào database
     + mới chỉ áp dụng cho trang 24h.com.vn
+19/10/2016:
+  - Thêm cột imageUrl để lưu URL hình ảnh làm ảnh đại diện cho vài đăng
+  - Ảnh mặc định: https://goo.gl/sBSZWp
