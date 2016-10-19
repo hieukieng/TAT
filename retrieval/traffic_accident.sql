@@ -26,7 +26,7 @@ CREATE TABLE `newscontent` (
   `contentID` int(11) NOT NULL AUTO_INCREMENT,
   `content` mediumtext CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`contentID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,9 +43,10 @@ CREATE TABLE `newsheader` (
   `sourceLink` tinytext CHARACTER SET utf8 NOT NULL,
   `newsDescription` mediumtext COLLATE utf8_unicode_ci,
   `username` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `imageUrl` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'https://goo.gl/sBSZWp',
   PRIMARY KEY (`newsID`),
   KEY `fk_user` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,4 +95,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-08  9:28:05
+-- Dump completed on 2016-10-19 12:18:06
