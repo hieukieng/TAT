@@ -41,73 +41,42 @@
     <input id="submit" type="button" value="Geocode">
 </div>
 <div id="map"></div>
-<div id="dataa"></div>
-<!--        <script>
-            function initMap() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 8,
-                    center: {lat: -34.397, lng: 150.644}
-                });
-                var geocoder = new google.maps.Geocoder();
+<div id="map2"></div>
 
-                document.getElementById('submit').addEventListener('click', function () {
-                    geocodeAddress(geocoder, map);
-                });
-            }
 
-            function geocodeAddress(geocoder, resultsMap) {
-                var address = document.getElementById('address').value;
-                geocoder.geocode({'address': address}, function (results, status) {
-                    if (status === 'OK') {
-                        resultsMap.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                            map: resultsMap,
-                            position: results[0].geometry.location
-                        });
-                    } else {
-                        alert('Geocode was not successful for the following reason: ' + status);
-                    }
-                });
-            }
-        </script>-->
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDWWbW0CdyYO2EVkILAuJ-algzJ4_pcGU&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDWWbW0CdyYO2EVkILAuJ-algzJ4_pcGU&libraries=visualization&callback=initMap">
+</script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDWWbW0CdyYO2EVkILAuJ-algzJ4_pcGU&libraries=visualization">
 </script>
 
-<?php
-//$conn = mysqli_connect("localhost", "root", "", "databaselocation") or die('Cannot connect');
-//
-//        mysql_query("SET NAMES 'UTF8'");
-//
-//        $sql = 'SELECT * FROM location';
-//
-//        $result = mysqli_query($conn, $sql);
-//
-//        if (!$result) {
-//            die('Sai câu truy vấn');
-//        }
-//
-//// Start XML file, echo parent node
-//        echo '<p><markers>';
-//
-//// Iterate through the rows, printing XML nodes for each
-//        while ($row = @mysqli_fetch_assoc($result)) {
-//            // ADD TO XML DOCUMENT NODE
-//            echo '<marker ';
-//            echo 'id="' . $row['id'] . '" ';
-//            echo 'name="' . $row['name'] . '" ';
-//            echo '/>';
-//        }
-//
-//// End XML file
-//        echo '</markers></p>';
-//        mysqli_close($conn);
-?>
 <script type="text/javascript">
 
     var map;
     var geocoder = new google.maps.Geocoder();
-    var infowindow = new google.maps.InfoWindow;
+    var infowindow = new google.maps.InfoWindow();
+
+    var heatmapData = [
+        new google.maps.LatLng(21.026546, 105.805377),
+        new google.maps.LatLng(21.036800, 105.833530),
+        new google.maps.LatLng(21.030712, 105.845718),
+        new google.maps.LatLng(21.013246, 105.828380),
+        new google.maps.LatLng(21.005596, 105.843315),
+        new google.maps.LatLng(21.003993, 105.850954),
+        new google.maps.LatLng(21.000508, 105.847714),
+        new google.maps.LatLng(21.000848, 105.842435),
+        new google.maps.LatLng(21.004414, 105.842006),
+        new google.maps.LatLng(21.004334, 105.838852),
+        new google.maps.LatLng(21.001890, 105.841234),
+        new google.maps.LatLng(21.004855, 105.840311),
+        new google.maps.LatLng(21.005916, 105.848679),
+        new google.maps.LatLng(21.002371, 105.849216)
+    ];
+
+    var heatmap = new google.maps.visualization.HeatmapLayer({
+        data: heatmapData
+    });
 
     function initMap() {
 
@@ -116,10 +85,12 @@
             center: {lat: 21.027990, lng: 105.833680}//21.027990, 105.833680
         });
 
+        heatmap.setMap(map);
+
         document.getElementById('submit').addEventListener('click', function () {
-            geocodeAddress(geocoder, map,document.getElementById('address').value);
+            geocodeAddress(geocoder, map, document.getElementById('address').value);
         });
-        document.getElementById('dataa').innerHTML="Van Thanh";
+
         downloadUrl("phpsqlajax_genxml2.php", function (data) {
 
             var xml = data.responseXML;
@@ -127,10 +98,12 @@
             var markers = xml.documentElement.getElementsByTagName("marker");
 
             for (var i = 0; i < markers.length; i++) {
+
                 var id = markers[i].getAttribute("id");
-                var local_name = markers[i].getAttribute("name");
+                var local_name = markers[i].getAttribute("name").toString();
                 var geocode = new google.maps.Geocoder();
                 geocodeAddress(geocode, map, local_name);
+
             }
 
         });
@@ -138,7 +111,6 @@
 
     function geocodeAddress(geocoder, resultsMap, name) {
 
-        //var address = document.getElementById('address').value;
         geocoder.geocode({'address': name}, function (results, status) {
             if (status === 'OK') {
                 resultsMap.setCenter(results[0].geometry.location);
@@ -146,6 +118,9 @@
                     map: resultsMap,
                     position: results[0].geometry.location
                 });
+
+               
+
                 var html = "<b>" + name + "</b> <br/>" + address;
                 bindInfoWindow(marker, map, infowindow, html);
             } else {
@@ -160,7 +135,7 @@
             new ActiveXObject('Microsoft.XMLHTTP') :
             new XMLHttpRequest;
 
-        request.onreadystatechange = function() {
+        request.onreadystatechange = function () {
 
             if (request.readyState == 4) {
 
@@ -170,7 +145,9 @@
         };
 
         request.open('GET', url, true);
+
         request.send(null);
+
     }
 
     function bindInfoWindow(marker, map, infoWindow, html) {
@@ -180,7 +157,8 @@
             infoWindow.open(map, marker);
         });
     }
-    function doNothing() {}
+    function doNothing() {
+    }
 
 
 </script>
