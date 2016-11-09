@@ -16,35 +16,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `newscontent`
+-- Table structure for table `article`
 --
 
-DROP TABLE IF EXISTS `newscontent`;
+DROP TABLE IF EXISTS `article`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `newscontent` (
-  `contentID` int(11) NOT NULL AUTO_INCREMENT,
-  `content` mediumtext CHARACTER SET utf8 NOT NULL,
-  PRIMARY KEY (`contentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `newsheader`
---
-
-DROP TABLE IF EXISTS `newsheader`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `newsheader` (
-  `newsID` int(11) NOT NULL AUTO_INCREMENT,
-  `newsTitle` tinytext CHARACTER SET utf8,
-  `newsDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `sourceLink` tinytext CHARACTER SET utf8 NOT NULL,
-  `newsDescription` mediumtext COLLATE utf8_unicode_ci,
+CREATE TABLE `article` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `title` tinytext CHARACTER SET utf8,
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `source_link` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
+  `description` mediumtext CHARACTER SET utf8,
   `username` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
-  `imageUrl` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'https://goo.gl/sBSZWp',
-  PRIMARY KEY (`newsID`),
+  `avatar` varchar(500) CHARACTER SET utf8 DEFAULT 'https://goo.gl/sBSZWp',
+  `content` mediumtext COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `source_link_UNIQUE` (`source_link`),
   KEY `fk_user` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -57,16 +45,36 @@ DROP TABLE IF EXISTS `summary`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `summary` (
-  `newsID` int(11) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL,
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `place` tinytext COLLATE utf8_unicode_ci,
   `deaths` int(11) DEFAULT '0',
   `injuries` int(11) DEFAULT '0',
   `reason` tinytext COLLATE utf8_unicode_ci,
   `vehicles` tinytext COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`time`),
-  KEY `sum_header_idx` (`newsID`),
-  CONSTRAINT `sum_header` FOREIGN KEY (`newsID`) REFERENCES `newsheader` (`newsID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `summary_user`
+--
+
+DROP TABLE IF EXISTS `summary_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `summary_user` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `place` tinytext COLLATE utf8_unicode_ci,
+  `deaths` int(11) DEFAULT '0',
+  `injuries` int(11) DEFAULT '0',
+  `reason` tinytext COLLATE utf8_unicode_ci,
+  `vehicles` tinytext COLLATE utf8_unicode_ci,
+  `username` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `summarizer` varchar(50) COLLATE utf8_unicode_ci DEFAULT 'Tóm tắt tự động',
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -78,11 +86,21 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
-  `task` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`username`)
+  `first_name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sex` varchar(10) COLLATE utf8_unicode_ci DEFAULT 'MALE',
+  `birthday` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `address` varchar(150) CHARACTER SET utf8 DEFAULT NULL,
+  `phone_number` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `joined_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `position` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -95,4 +113,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-19 12:18:06
+-- Dump completed on 2016-11-09 23:52:29
