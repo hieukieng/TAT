@@ -10,7 +10,7 @@ import news.ArticleZingVn;
  * @Notes View my notes at haviettrang.postach.io
  */
 public class TestWebsite {
-    private static final String URL = "http://news.zing.vn/tphcm-han-che-xe-qua-cua-ngo-san-bay-tan-son-nhat-post696849.html";
+    private static final String URL = "http://news.zing.vn/ha-noi-thi-diem-thu-phi-do-xe-theo-gio-post696781.html";
     public static void main(String[] args) {
         Article article = new ArticleZingVn();
         

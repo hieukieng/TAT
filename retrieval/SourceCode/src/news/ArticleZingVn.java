@@ -13,13 +13,13 @@ import org.jsoup.select.Elements;
  * @website haviettrang.blogspot.com
  * @Notes View my notes at haviettrang.postach.io
  */
-public class ArticleZingVn extends Article{
+public class ArticleZingVn extends Article {
 
     private Elements elements;
 
     public ArticleZingVn() {
     }
-    
+
     @Override
     public void parseContent(String url) {
         connectUrl(url);
@@ -59,7 +59,7 @@ public class ArticleZingVn extends Article{
     @Override
     protected String getFirstImageUrl(Document document) {
         elements = document.getElementsByClass("the-article-body cms-body");
-        
+
         return elements.select("img[src~=(?i)\\.(png|jpe?g|gif)]").attr("src");
     }
 
