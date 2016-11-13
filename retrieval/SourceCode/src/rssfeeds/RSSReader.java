@@ -19,8 +19,8 @@ public class RSSReader {
     private static final String ITEM = "item";
     private static final String LINK = "link";
 
-    public static ArrayList<URL> getAllLink(String rssLink) throws Exception {
-        ArrayList<URL> links = new ArrayList<>();
+    public static ArrayList<String> getAllLink(String rssLink) throws Exception {
+        ArrayList<String> links = new ArrayList<>();
 
         URL url = new URL(rssLink);
 
@@ -41,10 +41,9 @@ public class RSSReader {
                 if (localPart.equals(LINK)) {
                     link = getCharacterData(event, eventReader);
                 }
-
             } else if (event.isEndElement()) {
                 if (event.asEndElement().getName().getLocalPart().equals(ITEM)) {
-                    links.add(new URL(link));
+                    links.add(link);
                     eventReader.nextEvent();
                 }
             }

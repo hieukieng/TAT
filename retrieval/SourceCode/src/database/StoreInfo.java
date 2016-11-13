@@ -1,6 +1,5 @@
 package database;
 
-import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import news.Article;
@@ -13,18 +12,15 @@ public class StoreInfo {
 
     private TrafficAccident trafficAccident;
     private PreparedStatement preSta;
-    private Article article;
     private String query;
 
     public StoreInfo() {
         trafficAccident = new TrafficAccident();
     }
 
-    public void storeInfo(URL url) throws SQLException {
+    public void storeInfo(Article article) throws SQLException {
 
         trafficAccident.connectToDatabase();
-
-        article.parseUrl(url);
 
         query = "insert into article (title, date, source_link, description, username, avatar, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
 
@@ -44,5 +40,7 @@ public class StoreInfo {
         preSta.close();
         trafficAccident.disconnectToDatabase();
     }
+    
+//    public void storeAllLink(list Links)
 
 }

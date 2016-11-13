@@ -1,7 +1,6 @@
 package news;
 
 
-import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,15 +14,15 @@ import org.jsoup.select.Elements;
  * @website haviettrang.blogspot.com
  * @Notes View my notes at haviettrang.postach.io
  */
-public class Website24hComVn extends Article{
+public class Article24hComVn extends Article{
 
     private Elements elements;
     
-    public Website24hComVn() {
+    public Article24hComVn() {
     }
 
     @Override
-    public void parseContent(URL url) {
+    public void parseContent(String url) {
         connectUrl(url);
         
         elements = document.getElementsByClass("baiviet-sapo");

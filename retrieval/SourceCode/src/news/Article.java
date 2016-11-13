@@ -1,7 +1,6 @@
 package news;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Timestamp;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -73,7 +72,7 @@ public abstract class Article {
         this.content = content;
     }
 
-    public void parseUrl(URL url) {
+    public void parseUrl(String url) {
         connectUrl(url);
 
         setTitle(document.title());
@@ -82,21 +81,21 @@ public abstract class Article {
 
         setDescription(document.select("meta[name=description]").attr("content"));
 
-        setUrl(url.toString());
+        setUrl(url);
 
         setImageUrl(getFirstImageUrl(document));
     }
 
-    protected void connectUrl(URL url) {
+    protected void connectUrl(String url) {
         try {
-            document = Jsoup.connect(url.toString()).timeout(10000).userAgent("Chrome").get();
+            document = Jsoup.connect(url).timeout(10000).userAgent("Chrome").get();
         } catch (IOException ex) {
             System.out.println("Can't connect to website " + url);
             ex.printStackTrace();
         }
     }
 
-    public abstract void parseContent(URL url);
+    public abstract void parseContent(String url);
     
     protected abstract Timestamp convertDateTime(Document document);
     

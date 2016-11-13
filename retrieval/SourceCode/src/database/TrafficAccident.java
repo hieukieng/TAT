@@ -1,8 +1,6 @@
 package database;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -18,23 +16,25 @@ public class TrafficAccident {
         return connection;
     }
     
-    public void connectToDB() {
+    public void connectToDatabase() {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, "root", "mysqldatabase");
             System.out.println("Connect success");
-        } catch (Exception e) {
-            System.out.println("Error connection");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Database not found");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Connecting to the database unsuccessful");
             e.printStackTrace();
         }
     }
     
-    public void disconnectToDB() {
+    public void disconnectToDatabase() {
         try {
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(TrafficAccident.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

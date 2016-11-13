@@ -1,6 +1,5 @@
 package news;
 
-import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,15 +12,15 @@ import org.jsoup.select.Elements;
  * @website haviettrang.blogspot.com
  * @Notes View my notes at haviettrang.postach.io
  */
-public class WebsiteTinTucVn extends Article{
+public class ArticleTinTucVn extends Article{
 
     private Elements elements;
 
-    public WebsiteTinTucVn() {
+    public ArticleTinTucVn() {
     }
 
     @Override
-    public void parseContent(URL url) {
+    public void parseContent(String url) {
         connectUrl(url);
         
         StringBuilder content = new StringBuilder();
