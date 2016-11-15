@@ -1,10 +1,12 @@
 package database;
 
-import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 import news.Article;
+import news.Article24hComVn;
 import news.ArticleTinTucVn;
+import rssfeeds.GetLinksFromUrl;
 import rssfeeds.RSSReader;
 
 /**
@@ -15,25 +17,38 @@ import rssfeeds.RSSReader;
  */
 public class Main {
 
-    private static final String RSS_TIN_TUC_VN = "http://tintuc.vn/rss/giao-thong.rss";
-    private static final String BAO_GIAO_THONG_VN = "http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/";
-    private static final String WEBSITE_24_COM_VN = "http://www.24h.com.vn/tai-nan-giao-thong-c408.html";
-    private static final String NEWS_ZING_VN = "http://news.zing.vn/giao-thong.html";
-    private static final String EVA_VN = "http://eva.vn/tai-nan-giao-thong-moi-nhat-p1375c73.html";
+    public static final String RSS_TIN_TUC_VN = "http://tintuc.vn/rss/giao-thong.rss";
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Article article = new ArticleTinTucVn();
         
         StoreInfo storeInfo = new StoreInfo();
         
-        ArrayList<String> links;
+        GetLinksFromUrl getLinksFromUrl = new GetLinksFromUrl();
+        
+        ArrayList<String> linksRss = null;
 
-        links = RSSReader.getAllLink(RSS_TIN_TUC_VN);
+        try {
+            linksRss = RSSReader.getAllLink(RSS_TIN_TUC_VN);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-        for (Iterator iterator = links.iterator(); iterator.hasNext();) {
-            URL url = (URL) iterator.next();
-
-            storeInfo.storeInfo(article);
+        try {
+            storeInfo.storeArticles(article, linksRss);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        
+        HashSet<String> links = getLinksFromUrl.getLinksFrom24h();
+        
+        article = new Article24hComVn();
+        
+        try {
+            storeInfo.storeArticles(article, links);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 }

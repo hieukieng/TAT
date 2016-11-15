@@ -2,6 +2,8 @@ package database;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Iterator;
 import news.Article;
 
 /**
@@ -18,11 +20,11 @@ public class StoreInfo {
         trafficAccident = new TrafficAccident();
     }
 
-    public void storeInfo(Article article) throws SQLException {
+    public <E extends Article> void storeInfo(E article) throws SQLException {
 
         trafficAccident.connectToDatabase();
 
-        query = "insert into article (title, date, source_link, description, username, avatar, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
+        query = "insert into article (title, date, source_link, description, username, image_url, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
 
         preSta = trafficAccident.getConnection().prepareStatement(query);
 
@@ -41,6 +43,16 @@ public class StoreInfo {
         trafficAccident.disconnectToDatabase();
     }
     
-//    public void storeAllLink(list Links)
+    public <E extends Article, T extends  Collection> void storeArticles(E article, T links) throws SQLException {
+        
+        for (Iterator iterator = links.iterator(); iterator.hasNext();) {
+            article.parseUrl((String) iterator.next());
 
+            try {
+                storeInfo(article);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }

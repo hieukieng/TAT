@@ -34,21 +34,20 @@ public class ArticleZingVn extends Article {
 
         content.append(conent.replace(lienQuan.text(), ""));
         setContent(content);
-        elements = document.getElementsByClass("the-article-publish");
-        String s = elements.text();
-        System.out.println(s.substring(0, 5) + ":00.0");
+
     }
 
     @Override
     public Timestamp convertDateTime(Document document) {
+        //datetime=13/11/2016 19:09
         elements = document.getElementsByClass("the-article-publish");
         String s = elements.text();
         StringBuilder datetime = new StringBuilder(s.substring(6));
-        datetime = (datetime.append(s.substring(0, 0))).append(":00.0");
+        datetime = (datetime.append(" ").append(s.substring(0, 5)));
         Date parseDate = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss:SSS");
         try {
-            parseDate = dateFormat.parse(datetime.toString());
+            parseDate = dateFormat.parse(datetime.append(":00:0").toString());
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
@@ -58,9 +57,8 @@ public class ArticleZingVn extends Article {
 
     @Override
     protected String getFirstImageUrl(Document document) {
-        elements = document.getElementsByClass("the-article-body cms-body");
-
+        elements = document.getElementsByClass("pic");
+        
         return elements.select("img[src~=(?i)\\.(png|jpe?g|gif)]").attr("src");
     }
-
 }
