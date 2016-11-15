@@ -33,7 +33,12 @@ public class StoreInfo {
         preSta.setString(3, article.getUrl());
         preSta.setString(4, article.getDescription());
         preSta.setString(5, null);
-        preSta.setString(6, article.getImageUrl());
+        if (article.getImageUrl() != null) {
+            preSta.setString(6, article.getImageUrl());
+        } else {
+            preSta.setString(6, "https://s-media-cache-ak0.pinimg.com/564x/69/2b/7f/692b7fdec925793d38b4dd90ffb6e384.jpg");
+        }
+        
         preSta.setString(7, null);
 
         preSta.executeUpdate();
