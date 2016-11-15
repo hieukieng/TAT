@@ -39,7 +39,7 @@ public class StoreInfo {
             preSta.setString(6, "https://s-media-cache-ak0.pinimg.com/564x/69/2b/7f/692b7fdec925793d38b4dd90ffb6e384.jpg");
         }
         
-        preSta.setString(7, null);
+        preSta.setString(7, article.getContent());
 
         preSta.executeUpdate();
 
