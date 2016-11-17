@@ -1,7 +1,11 @@
-package database;
 
+
+import java.util.HashSet;
+import java.util.Iterator;
 import news.Article;
+import news.ArticleTinTucVn;
 import news.ArticleZingVn;
+import rssfeeds.GetLinksFromUrl;
 
 /**
  * @author Hà Viết Tráng - HAVIETTRANG
@@ -16,36 +20,26 @@ public class TestWebsite {
     public static final String RSS_TIN_TUC_VN = "http://tintuc.vn/rss/giao-thong.rss";
 
     public static void main(String[] args) {
-//        ArrayList<String> links = null;
-//
-//        try {
-//            links = RSSReader.getAllLink(RSS_TIN_TUC_VN);
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//
-//        for (Iterator<String> iterator = links.iterator(); iterator.hasNext();) {
-//            String url = iterator.next();
-//
-//            Article article = new ArticleTinTucVn();
-//
-//            article.parseUrl(url);
-//
-//            article.parseContent(url);
-//
+        HashSet<String> links = new GetLinksFromUrl().getLinksFromTinTucVn(1, 174);
+
+        for (Iterator<String> iterator = links.iterator(); iterator.hasNext();) {
+            String url = iterator.next();
+
+            Article article = new ArticleTinTucVn();
+
+            article.parseUrl(url);
+
 //            System.out.println(article.getTitle());
 //            System.out.println(article.getDate());
 //            System.out.println(article.getDescription());
 //            System.out.println(article.getImageUrl());
-//            System.out.println(article.getUrl());
-//            System.out.println(article.getContent());
-//        }
+            System.out.println(article.getUrl());
+            System.out.println(article.getContent());
+        }
 
         Article article = new ArticleZingVn();
 
         article.parseUrl(URL);
-
-        article.parseContent(URL);
 
         System.out.println(article.getTitle());
         System.out.println(article.getDate());
