@@ -12,6 +12,7 @@ import news.Article;
  */
 public class StoreInfo {
 
+    private static final String IMAGE_URL = "https://s-media-cache-ak0.pinimg.com/564x/69/2b/7f/692b7fdec925793d38b4dd90ffb6e384.jpg";
     private TrafficAccident trafficAccident;
     private PreparedStatement preSta;
     private String query;
@@ -36,7 +37,7 @@ public class StoreInfo {
         if (article.getImageUrl() != null) {
             preSta.setString(6, article.getImageUrl());
         } else {
-            preSta.setString(6, "https://s-media-cache-ak0.pinimg.com/564x/69/2b/7f/692b7fdec925793d38b4dd90ffb6e384.jpg");
+            preSta.setString(6, IMAGE_URL);
         }
         
         preSta.setString(7, article.getContent());
@@ -48,10 +49,11 @@ public class StoreInfo {
         trafficAccident.disconnectToDatabase();
     }
     
-    public <E extends Article, T extends  Collection> void storeArticles(E article, T links) throws SQLException {
+    public <E extends Article, T extends  Collection> void storeInfo(E article, T links) throws SQLException {
         
         for (Iterator iterator = links.iterator(); iterator.hasNext();) {
-            article.parseUrl((String) iterator.next());
+            String url = (String) iterator.next();
+            article.parseUrl(url);
 
             try {
                 storeInfo(article);
