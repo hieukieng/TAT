@@ -1,13 +1,10 @@
 package database;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import news.Article;
-import news.Article24hComVn;
 import news.ArticleTinTucVn;
 import rssfeeds.GetLinksFromUrl;
-import rssfeeds.RSSReader;
 
 /**
  * @author Hà Viết Tráng - HAVIETTRANG
@@ -21,32 +18,29 @@ public class Main {
 
     public static void main(String[] args) {
         Article article = new ArticleTinTucVn();
-        
+
         StoreInfo storeInfo = new StoreInfo();
-        
+
         GetLinksFromUrl getLinksFromUrl = new GetLinksFromUrl();
         
-        ArrayList<String> linksRss = null;
+//            ArrayList<String> linksRss = null;
+//
+//            try {
+//                linksRss = RSSReader.getAllLink(RSS_TIN_TUC_VN);
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+//
+//            try {
+//                storeInfo.storeArticles(article, linksRss);
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+
+        HashSet<String> links = getLinksFromUrl.getLinksFromTinTucVn(100, 174);
 
         try {
-            linksRss = RSSReader.getAllLink(RSS_TIN_TUC_VN);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            storeInfo.storeArticles(article, linksRss);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
-        
-        HashSet<String> links = getLinksFromUrl.getLinksFrom24h();
-        
-        article = new Article24hComVn();
-        
-        try {
-            storeInfo.storeArticles(article, links);
+            storeInfo.storeInfo(article, links);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
