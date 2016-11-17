@@ -21,8 +21,8 @@ public class ArticleZingVn extends Article {
     }
 
     @Override
-    public void parseContent(String url) {
-        connectUrl(url);
+    protected StringBuilder parseContent() {
+        
         elements = document.getElementsByClass("the-article-summary");
 
         StringBuilder content = new StringBuilder(elements.text());
@@ -33,7 +33,8 @@ public class ArticleZingVn extends Article {
         Elements lienQuan = document.getElementsByClass("inner-article");
 
         content.append(conent.replace(lienQuan.text(), ""));
-        setContent(content);
+        
+        return content;
 
     }
 

@@ -20,9 +20,7 @@ public class ArticleTinTucVn extends Article{
     }
 
     @Override
-    public void parseContent(String url) {
-        connectUrl(url);
-        
+    protected StringBuilder parseContent() {
         StringBuilder content = new StringBuilder();
         
         elements = document.getElementsByClass("news-content-excerpt");
@@ -33,7 +31,7 @@ public class ArticleTinTucVn extends Article{
 
         content.append(elements.text());
         
-        setContent(content);
+        return content;
     }
 
     @Override

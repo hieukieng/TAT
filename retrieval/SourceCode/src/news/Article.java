@@ -84,6 +84,8 @@ public abstract class Article {
         setUrl(url);
 
         setImageUrl(getFirstImageUrl(document));
+        
+        setContent(parseContent());
     }
 
     protected void connectUrl(String url) {
@@ -95,7 +97,7 @@ public abstract class Article {
         }
     }
 
-    public abstract void parseContent(String url);
+    protected abstract StringBuilder parseContent();
     
     protected abstract Timestamp convertDateTime(Document document);
     

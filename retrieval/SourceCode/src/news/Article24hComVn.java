@@ -22,10 +22,10 @@ public class Article24hComVn extends Article{
     }
 
     @Override
-    public void parseContent(String url) {
-        connectUrl(url);
+    protected StringBuilder parseContent() {
         
         elements = document.getElementsByClass("baiviet-sapo");
+        
         StringBuilder content = new StringBuilder(elements.text());
         
         elements = document.getElementsByClass("text-conent");
@@ -38,7 +38,7 @@ public class Article24hComVn extends Article{
         //Xoa phan bai viet lien quan roi them vao content
         content.append(conent.replace(lienQuan.text(), ""));
         
-        setContent(content);
+        return content;
     }
 
     
