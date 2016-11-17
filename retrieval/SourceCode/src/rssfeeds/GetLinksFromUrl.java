@@ -22,8 +22,8 @@ public class GetLinksFromUrl {
     public static final String EVA_VN = "http://eva.vn/tai-nan-giao-thong-moi-nhat-p1375c73.html";
 
     private Document document;
-    Elements elements;
-    Iterator<Element> iterator;
+    private Elements elements;
+    private Iterator<Element> iterator;
 
     public GetLinksFromUrl() {
     }
@@ -36,9 +36,24 @@ public class GetLinksFromUrl {
             ex.printStackTrace();
         }
     }
-
+    
+    /**
+     * 
+     * @return Các links về mục tai nạn giao thông tại trang
+     * <a href="http://www.24h.com.vn/tai-nan-giao-thong-c408.html">
+     * http://www.24h.com.vn/tai-nan-giao-thong-c408.html</a>
+     */
     public HashSet<String> getLinksFrom24h() {
-        connectUrl(WEBSITE_24H_COM_VN);
+        return getLinksFrom24h(WEBSITE_24H_COM_VN);
+    }
+
+    /**
+     * 
+     * @param url nguồn url để lấy các links từ trang 24h.com.vn
+     * @return Các links về mục tai nạn giao thông tại trang <code>url</code>
+     */
+    public HashSet<String> getLinksFrom24h(String url) {
+        connectUrl(url);
 
         HashSet<String> links = new HashSet<>();
 
@@ -58,12 +73,15 @@ public class GetLinksFromUrl {
     }
 
     /**
-     * Get articles from "http://tintuc.vn/giao-thong?page=<b>pageBegin<b>"<br />
-     * to "http://tintuc.vn/giao-thong?page=<b>pageEnd<b>
+     * Lấy links từ "http://tintuc.vn/giao-thong?page=<b>pageBegin</b>"</ br>
+     * tới "http://tintuc.vn/giao-thong?page=<b>pageEnd</b> về chuyên mục
+     * giao thông
      *
      * @param pageBegin
      * @param pageEnd
-     * @return
+     * @return Các links về mục tai nạn giao thông tại trang
+     * <a href="http://tintuc.vn/giao-thong">
+     * http://tintuc.vn/giao-thong</a>
      */
     public HashSet<String> getLinksFromTinTucVn(int pageBegin, int pageEnd) {
 
@@ -108,9 +126,24 @@ public class GetLinksFromUrl {
         }
         return links;
     }
-
+    
+    /**
+     * 
+     * @return Các links về mục tai nạn giao thông tại trang
+     * <a href="http://eva.vn/tai-nan-giao-thong-moi-nhat-p1375c73.html">
+     * http://eva.vn/tai-nan-giao-thong-moi-nhat-p1375c73.html</a>
+     */
     public HashSet<String> getLinksFromEva() {
-        connectUrl(EVA_VN);
+        return getLinksFromEva(EVA_VN);
+    }
+
+    /**
+     * 
+     * @param url nguồn url để lấy các links từ trang eva.vn
+     * @return Các links về mục tai nạn giao thông tại trang <code>url</code>
+     */
+    public HashSet<String> getLinksFromEva(String url) {
+        connectUrl(url);
 
         HashSet<String> links = new HashSet<>();
 
@@ -127,17 +160,5 @@ public class GetLinksFromUrl {
             }
         }
         return links;
-    }
-
-    public static void main(String[] args) {
-        GetLinksFromUrl demo = new GetLinksFromUrl();
-
-        Iterator iterator = demo.getLinksFromTinTucVn(1, 200).iterator();
-        
-        int i = 0;
-        while (iterator.hasNext()) {
-            System.out.print(i++ + "\t");
-            System.out.println(iterator.next());
-        }
     }
 }
