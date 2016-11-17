@@ -27,7 +27,7 @@ public class GetLinksFromUrl {
 
     public GetLinksFromUrl() {
     }
-    
+
     private void connectUrl(String url) {
         try {
             document = Jsoup.connect(url).timeout(10000).userAgent("Chrome").get();
@@ -56,33 +56,33 @@ public class GetLinksFromUrl {
         }
         return links;
     }
-    
+
     /**
-     * Get all article from 
-     * "http://tintuc.vn/giao-thong?page=<b>pageBegin<b>" to
-     * "http://tintuc.vn/giao-thong?page=<b>pageEnd<b>
+     * Get articles from "http://tintuc.vn/giao-thong?page=<b>pageBegin<b>"<br />
+     * to "http://tintuc.vn/giao-thong?page=<b>pageEnd<b>
+     *
      * @param pageBegin
      * @param pageEnd
-     * @return 
+     * @return
      */
     public HashSet<String> getLinksFromTinTucVn(int pageBegin, int pageEnd) {
-        String url = "http://tintuc.vn/giao-thong?page=";
-        connectUrl(WEBSITE_24H_COM_VN);
 
         HashSet<String> links = new HashSet<>();
 
-        elements = document.select("a[href]");
-        iterator = elements.iterator();
+        for (int i = pageBegin; i <= pageEnd; i++) {
+            connectUrl("http://tintuc.vn/giao-thong?page=" + i);
 
-        while (iterator.hasNext()) {
-            String s = iterator.next().attr("href");
-            if (s.contains("/tai-nan-giao-thong/")) {
-                if (!s.contains("24h.com.vn")) {
-                    s = "http://www.24h.com.vn" + s;
+            elements = document.select("a[href]");
+            iterator = elements.iterator();
+
+            while (iterator.hasNext()) {
+                String s = iterator.next().attr("href");
+                if (s.contains("/giao-thong/")) {
+                    links.add(s);
                 }
-                links.add(s);
             }
         }
+
         return links;
     }
 
@@ -129,13 +129,15 @@ public class GetLinksFromUrl {
         return links;
     }
 
-//    public static void main(String[] args) {
-//        GetLinksFromUrl demo = new GetLinksFromUrl();
-//
-//        Iterator i = demo.getAllLinksFromZing().iterator();
-//        
-//        while (i.hasNext()) {
-//            System.out.println(i.next());
-//        }
-//    }
+    public static void main(String[] args) {
+        GetLinksFromUrl demo = new GetLinksFromUrl();
+
+        Iterator iterator = demo.getLinksFromTinTucVn(1, 200).iterator();
+        
+        int i = 0;
+        while (iterator.hasNext()) {
+            System.out.print(i++ + "\t");
+            System.out.println(iterator.next());
+        }
+    }
 }
