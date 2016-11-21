@@ -35,7 +35,6 @@ public class TestRss {
             url = (String) iterator.next();
             
             article.parseUrl(url);
-            article.parseContent(url);
 
             System.out.println(article.getTitle());
             System.out.println(article.getUrl());

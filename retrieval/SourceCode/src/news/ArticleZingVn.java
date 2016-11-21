@@ -35,7 +35,6 @@ public class ArticleZingVn extends Article {
         content.append(conent.replace(lienQuan.text(), ""));
         
         return content;
-
     }
 
     @Override
