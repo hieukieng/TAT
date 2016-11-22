@@ -12,7 +12,8 @@ import news.Article;
  */
 public class StoreInfo {
 
-    private static final String IMAGE_URL = "https://s-media-cache-ak0.pinimg.com/564x/69/2b/7f/692b7fdec925793d38b4dd90ffb6e384.jpg";
+    private static final String IMAGE_URL =
+            "https://s-media-cache-ak0.pinimg.com/564x/69/2b/7f/692b7fdec925793d38b4dd90ffb6e384.jpg";
     private TrafficAccident trafficAccident;
     private PreparedStatement preSta;
     private String query;
@@ -25,7 +26,8 @@ public class StoreInfo {
 
         trafficAccident.connectToDatabase();
 
-        query = "insert into article (title, date, source_link, description, username, image_url, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
+        query = "insert into article (title, date, source_link, description,"
+                + "username, image_url, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
 
         preSta = trafficAccident.getConnection().prepareStatement(query);
 
@@ -34,6 +36,7 @@ public class StoreInfo {
         preSta.setString(3, article.getUrl());
         preSta.setString(4, article.getDescription());
         preSta.setString(5, null);
+        
         if (article.getImageUrl() != null) {
             preSta.setString(6, article.getImageUrl());
         } else {
@@ -45,6 +48,7 @@ public class StoreInfo {
         preSta.executeUpdate();
 
         System.out.println("Store information successfully");
+        
         preSta.close();
         trafficAccident.disconnectToDatabase();
     }
