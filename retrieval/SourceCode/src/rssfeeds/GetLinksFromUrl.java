@@ -16,10 +16,13 @@ import org.jsoup.select.Elements;
  */
 public class GetLinksFromUrl {
 
-    public static final String WEBSITE_24H_COM_VN = "http://www.24h.com.vn/tai-nan-giao-thong-c408.html";
-    public static final String BAO_GIAO_THONG_VN = "http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/";
-    public static final String NEWS_ZING_VN = "http://news.zing.vn/giao-thong.html";
-    public static final String EVA_VN = "http://eva.vn/tai-nan-giao-thong-moi-nhat-p1375c73.html";
+    public static final String WEBSITE_24H_COM_VN =
+            "http://www.24h.com.vn/tai-nan-giao-thong-c408.html";
+    public static final String BAO_GIAO_THONG_VN =
+            "http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/";
+    public static final String NEWS_ZING_VN ="http://news.zing.vn/giao-thong.html";
+    public static final String EVA_VN =
+            "http://eva.vn/tai-nan-giao-thong-moi-nhat-p1375c73.html";
 
     private Document document;
     private Elements elements;
