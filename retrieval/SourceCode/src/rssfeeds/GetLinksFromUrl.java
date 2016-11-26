@@ -107,25 +107,38 @@ public class GetLinksFromUrl {
         return links;
     }
 
-    //chua hoan thien
-    public HashSet<String> getLinksFromZing() {
-        connectUrl(NEWS_ZING_VN);
+    /**
+     * Lấy links từ "http://news.zing.vn/giao-thong/trang<b>pageBegin</b>.html"</ br>
+     * tới "http://news.zing.vn/giao-thong/trang<b>pageEnd</b>.html" về chuyên mục
+     * giao thông
+     *
+     * @param pageBegin
+     * @param pageEnd
+     * @return Các links về mục tai nạn giao thông tại trang
+     * <a http://news.zing.vn/giao-thong.html">
+     * http://news.zing.vn/giao-thong.html</a>
+     */
+    public HashSet<String> getLinksFromZing(int pageBegin, int pageEnd) {
 
         HashSet<String> links = new HashSet<>();
 
-        elements = document.select("a[href]");
-        iterator = elements.iterator();
+        for (int i = pageBegin; i <= pageEnd; i++) {
+            connectUrl("http://news.zing.vn/giao-thong/trang" + i + ".html");
 
-        while (iterator.hasNext()) {
-            String s = iterator.next().attr("href");
-//            if (s.contains("news.zing.vn/")) {
-//                if (!s.contains("24h.com.vn")) {
-//                    s = "http://www.24h.com.vn" + s;
-//                    links.add(s);
-//                }
-            links.add(s);
-            System.out.println(s);
-//            }
+            elements = document.getElementsByClass("cate_content");
+
+            Document tmp = Jsoup.parse(elements.toString());
+
+            elements = tmp.select("a[href]");
+
+            iterator = elements.iterator();
+
+            while (iterator.hasNext()) {
+                String s = iterator.next().attr("href");
+                if (!s.contains("/giao-thong/trang") && !s.contains("javascript")) {
+                    links.add("http://news.zing.vn" + s);
+                }
+            }
         }
         return links;
     }
