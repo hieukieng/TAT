@@ -1,7 +1,8 @@
 
-
+import java.util.HashSet;
 import news.Article;
-import news.ArticleBaoGiaoThongVn;
+import news.ArticleZingVn;
+import rssfeeds.GetLinksFromUrl;
 
 /**
  * @author Hà Viết Tráng - HAVIETTRANG
@@ -16,32 +17,28 @@ public class TestWebsite {
     public static final String RSS_TIN_TUC_VN = "http://tintuc.vn/rss/giao-thong.rss";
 
     public static void main(String[] args) {
-//        HashSet<String> links = new GetLinksFromUrl().getLinksFromTinTucVn(1, 174);
-//
-//        for (Iterator<String> iterator = links.iterator(); iterator.hasNext();) {
-//            String url = iterator.next();
-//
-//            Article article = new ArticleTinTucVn();
-//
-//            article.parseUrl(url);
-//
-//            System.out.println(article.getTitle());
-//            System.out.println(article.getDate());
-//            System.out.println(article.getDescription());
-//            System.out.println(article.getImageUrl());
-//            System.out.println(article.getUrl());
-//            System.out.println(article.getContent());
-//        }
+        HashSet<String> links = new GetLinksFromUrl().getLinksFromZing(1, 1);
 
-        Article article = new ArticleBaoGiaoThongVn();
+        for (String url : links) {
+            Article article = new ArticleZingVn();
 
-        article.parseUrl(URL);
+            article.parseUrl(url);
 
-        System.out.println(article.getTitle());
-        System.out.println(article.getDate());
-        System.out.println(article.getDescription());
-        System.out.println(article.getImageUrl());
-        System.out.println(article.getUrl());
-        System.out.println(article.getContent());
+            System.out.println("\n" + article.getTitle());
+            System.out.println(article.getDate());
+            System.out.println(article.getDescription());
+            System.out.println(article.getImageUrl());
+            System.out.println(article.getUrl());
+            System.out.println(article.getContent());
+        }//        Article article = new ArticleBaoGiaoThongVn();
+//
+//        article.parseUrl(URL);
+//
+//        System.out.println(article.getTitle());
+//        System.out.println(article.getDate());
+//        System.out.println(article.getDescription());
+//        System.out.println(article.getImageUrl());
+//        System.out.println(article.getUrl());
+//        System.out.println(article.getContent());
     }
 }
