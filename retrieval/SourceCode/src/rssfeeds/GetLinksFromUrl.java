@@ -21,8 +21,6 @@ public class GetLinksFromUrl {
     public static final String BAO_GIAO_THONG_VN =
             "http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/";
     public static final String NEWS_ZING_VN ="http://news.zing.vn/giao-thong.html";
-    public static final String EVA_VN =
-            "http://eva.vn/tai-nan-giao-thong-moi-nhat-p1375c73.html";
 
     private Document document;
     private Elements elements;
@@ -137,41 +135,6 @@ public class GetLinksFromUrl {
                 String s = iterator.next().attr("href");
                 if (!s.contains("/giao-thong/trang") && !s.contains("javascript")) {
                     links.add("http://news.zing.vn" + s);
-                }
-            }
-        }
-        return links;
-    }
-    
-    /**
-     * 
-     * @return Các links về mục tai nạn giao thông tại trang
-     * <a href="http://eva.vn/tai-nan-giao-thong-moi-nhat-p1375c73.html">
-     * http://eva.vn/tai-nan-giao-thong-moi-nhat-p1375c73.html</a>
-     */
-    public HashSet<String> getLinksFromEva() {
-        return getLinksFromEva(EVA_VN);
-    }
-
-    /**
-     * 
-     * @param url nguồn url để lấy các links từ trang eva.vn
-     * @return Các links về mục tai nạn giao thông tại trang <code>url</code>
-     */
-    public HashSet<String> getLinksFromEva(String url) {
-        connectUrl(url);
-
-        HashSet<String> links = new HashSet<>();
-
-        elements = document.select("a[href]");
-        iterator = elements.iterator();
-
-        while (iterator.hasNext()) {
-            String s = iterator.next().attr("href");
-            if (s.contains("/tin-tuc/")) {
-                if (!s.contains("tai-nan-giao-thong-moi-nhat") && !s.contains("eva.vn/")) {
-                    s = "http://eva.vn" + s;
-                    links.add(s);
                 }
             }
         }
