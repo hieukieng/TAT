@@ -44,8 +44,8 @@ public class GetLinksFromUrl {
      * <a href="http://www.24h.com.vn/tai-nan-giao-thong-c408.html">
      * http://www.24h.com.vn/tai-nan-giao-thong-c408.html</a>
      */
-    public HashSet<String> getLinksFrom24h() {
-        return getLinksFrom24h(WEBSITE_24H_COM_VN);
+    public HashSet<String> website24h() {
+        return website24h(WEBSITE_24H_COM_VN);
     }
 
     /**
@@ -53,7 +53,7 @@ public class GetLinksFromUrl {
      * @param url nguồn url để lấy các links từ trang 24h.com.vn
      * @return Các links về mục tai nạn giao thông tại trang <code>url</code>
      */
-    public HashSet<String> getLinksFrom24h(String url) {
+    public HashSet<String> website24h(String url) {
         connectUrl(url);
 
         HashSet<String> links = new HashSet<>();
@@ -84,7 +84,7 @@ public class GetLinksFromUrl {
      * <a href="http://tintuc.vn/giao-thong">
      * http://tintuc.vn/giao-thong</a>
      */
-    public HashSet<String> getLinksFromTinTucVn(int pageBegin, int pageEnd) {
+    public HashSet<String> tinTucVn(int pageBegin, int pageEnd) {
 
         HashSet<String> links = new HashSet<>();
 
@@ -106,17 +106,18 @@ public class GetLinksFromUrl {
     }
 
     /**
-     * Lấy links từ "http://news.zing.vn/giao-thong/trang<b>pageBegin</b>.html"</ br>
+     * Lấy links từ "http://news.zing.vn/giao-thong/trang<b>pageBegin</b>.html"
+     * </ br>
      * tới "http://news.zing.vn/giao-thong/trang<b>pageEnd</b>.html" về chuyên mục
      * giao thông
      *
-     * @param pageBegin
-     * @param pageEnd
+     * @param pageBegin nên bằng 1 để lấy tin mới nhất
+     * @param pageEnd nên có giá trị tối đa là 30
      * @return Các links về mục tai nạn giao thông tại trang
-     * <a http://news.zing.vn/giao-thong.html">
+     * <a href ="http://news.zing.vn/giao-thong.html">
      * http://news.zing.vn/giao-thong.html</a>
      */
-    public HashSet<String> getLinksFromZing(int pageBegin, int pageEnd) {
+    public HashSet<String> zingVn(int pageBegin, int pageEnd) {
 
         HashSet<String> links = new HashSet<>();
 
