@@ -4,7 +4,7 @@ import database.TrafficAccident;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * @author Hà Viết Tráng - HAVIETTRANG
@@ -17,8 +17,8 @@ public class GetLinksFromDatabase {
     private static TrafficAccident trafficAccident = new TrafficAccident();
     private static Statement statement;
 
-    public static ArrayList<String> website(String query) throws SQLException {
-        ArrayList<String> links = new ArrayList<>();
+    private static HashSet<String> website(String query) throws SQLException {
+        HashSet<String> links = new HashSet<>();
         
         trafficAccident.connectToDatabase();
 
@@ -33,10 +33,10 @@ public class GetLinksFromDatabase {
         return links;
     }
 
-    private static ArrayList<String> website24hComVn() {
+    public static HashSet<String> website24hComVn() {
         String query = "select source_link from article where source_link like \"%24h.com.vn%\"";
         
-        ArrayList<String> links = null;
+        HashSet<String> links = null;
         try {
             links = website(query);
         } catch (SQLException ex) {
@@ -46,10 +46,10 @@ public class GetLinksFromDatabase {
         return links;
     }
     
-    private static ArrayList<String> websiteBaoGiaoThongVn() {
+    public static HashSet<String> websiteBaoGiaoThongVn() {
         String query = "select source_link from article where source_link like \"%baogiaothong.vn%\"";
         
-        ArrayList<String> links = null;
+        HashSet<String> links = null;
         try {
             links = website(query);
         } catch (SQLException ex) {
@@ -59,10 +59,10 @@ public class GetLinksFromDatabase {
         return links;
     }
     
-    private static ArrayList<String> websiteTinTucVn() {
+    public static HashSet<String> websiteTinTucVn() {
         String query = "select source_link from article where source_link like \"%tintuc.vn%\"";
         
-        ArrayList<String> links = null;
+        HashSet<String> links = null;
         try {
             links = website(query);
         } catch (SQLException ex) {
@@ -72,10 +72,10 @@ public class GetLinksFromDatabase {
         return links;
     }
     
-    private static ArrayList<String> websiteZingVn() {
+    public static HashSet<String> websiteZingVn() {
         String query = "select source_link from article where source_link like \"%zing.vn%\"";
         
-        ArrayList<String> links = null;
+        HashSet<String> links = null;
         try {
             links = website(query);
         } catch (SQLException ex) {

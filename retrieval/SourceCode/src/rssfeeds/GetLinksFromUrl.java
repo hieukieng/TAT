@@ -16,11 +16,11 @@ import org.jsoup.select.Elements;
  */
 public class GetLinksFromUrl {
 
-    public static final String WEBSITE_24H_COM_VN =
-            "http://www.24h.com.vn/tai-nan-giao-thong-c408.html";
-    public static final String BAO_GIAO_THONG_VN =
-            "http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/";
-    public static final String NEWS_ZING_VN ="http://news.zing.vn/giao-thong.html";
+    public static final String WEBSITE_24H_COM_VN
+            = "http://www.24h.com.vn/tai-nan-giao-thong-c408.html";
+    public static final String BAO_GIAO_THONG_VN
+            = "http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/";
+    public static final String NEWS_ZING_VN = "http://news.zing.vn/giao-thong.html";
 
     private Document document;
     private Elements elements;
@@ -37,28 +37,24 @@ public class GetLinksFromUrl {
             ex.printStackTrace();
         }
     }
-    
+
     /**
-     * 
+     *
      * @return Các links về mục tai nạn giao thông tại trang
      * <a href="http://www.24h.com.vn/tai-nan-giao-thong-c408.html">
      * http://www.24h.com.vn/tai-nan-giao-thong-c408.html</a>
      */
     public HashSet<String> website24h() {
-        return website24h(WEBSITE_24H_COM_VN);
-    }
-
-    /**
-     * 
-     * @param url nguồn url để lấy các links từ trang 24h.com.vn
-     * @return Các links về mục tai nạn giao thông tại trang <code>url</code>
-     */
-    public HashSet<String> website24h(String url) {
-        connectUrl(url);
+        connectUrl(WEBSITE_24H_COM_VN);
 
         HashSet<String> links = new HashSet<>();
-
-        elements = document.select("a[href]");
+        
+        elements = document.getElementsByClass("colCenter");
+        
+        Document tmp = Jsoup.parse(elements.toString());
+        
+        elements = tmp.select("a[href]");
+        
         iterator = elements.iterator();
 
         while (iterator.hasNext()) {
@@ -75,8 +71,8 @@ public class GetLinksFromUrl {
 
     /**
      * Lấy links từ "http://tintuc.vn/giao-thong?page=<b>pageBegin</b>"</ br>
-     * tới "http://tintuc.vn/giao-thong?page=<b>pageEnd</b> về chuyên mục
-     * giao thông
+     * tới "http://tintuc.vn/giao-thong?page=<b>pageEnd</b> về chuyên mục giao
+     * thông
      *
      * @param pageBegin
      * @param pageEnd
@@ -108,8 +104,8 @@ public class GetLinksFromUrl {
     /**
      * Lấy links từ "http://news.zing.vn/giao-thong/trang<b>pageBegin</b>.html"
      * </ br>
-     * tới "http://news.zing.vn/giao-thong/trang<b>pageEnd</b>.html" về chuyên mục
-     * giao thông
+     * tới "http://news.zing.vn/giao-thong/trang<b>pageEnd</b>.html" về chuyên
+     * mục giao thông
      *
      * @param pageBegin nên bằng 1 để lấy tin mới nhất
      * @param pageEnd nên có giá trị tối đa là 30
@@ -131,11 +127,43 @@ public class GetLinksFromUrl {
             elements = tmp.select("a[href]");
 
             iterator = elements.iterator();
-
+            System.out.println("\npage " + i);
             while (iterator.hasNext()) {
                 String s = iterator.next().attr("href");
                 if (!s.contains("/giao-thong/trang") && !s.contains("javascript")) {
                     links.add("http://news.zing.vn" + s);
+                }
+            }
+        }
+        return links;
+    }
+
+    /**
+     * Lấy links từ ""http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageBegin</b>"
+     * </ br>
+     * tới ""http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageEnd</b>" về chuyên
+     * mục giao thông
+     * @param pageBegin nên bằng 1 để lấy tin mới nhất
+     * @param pageEnd nên có giá trị tối đa là 50
+     * @return
+     */
+    public HashSet<String> baoGiaoThongVn(int pageBegin, int pageEnd) {
+
+        HashSet<String> links = new HashSet<>();
+
+        String url = "http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p";
+
+        for (int i = pageBegin; i <= pageEnd; i++) {
+            connectUrl(url + i);
+
+            elements = document.select("a[href]");
+
+            iterator = elements.iterator();
+
+            while (iterator.hasNext()) {
+                String s = iterator.next().attr("href");
+                if (s.contains("http://www.baogiaothong.vn/tin-tai-nan-giao-thong-moi-nhat-hom-nay")) {
+                    links.add(s);
                 }
             }
         }
