@@ -32,7 +32,7 @@ public class Main {
         //trang TinTucVn
         article = new ArticleTinTucVn();
 
-        links = getLinksFromUrl.tinTucVn(1, 50);
+        links = getLinksFromUrl.tinTucVn(1, 20);
 
         try {
             storeInfo.storeInfo(article, links);

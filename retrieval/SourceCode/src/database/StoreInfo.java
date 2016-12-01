@@ -1,5 +1,6 @@
 package database;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -15,21 +16,25 @@ public class StoreInfo {
     private static final String IMAGE_URL =
             "https://s-media-cache-ak0.pinimg.com/564x/69/2b/7f/692b7fdec925793d38b4dd90ffb6e384.jpg";
     private TrafficAccident trafficAccident;
+    private Connection connection;
     private PreparedStatement preSta;
     private String query;
 
     public StoreInfo() {
+        
         trafficAccident = new TrafficAccident();
+        
+        trafficAccident.connectToDatabase();
+        
+        connection = trafficAccident.getConnection();
     }
 
     public <E extends Article> void storeInfo(E article) throws SQLException {
 
-        trafficAccident.connectToDatabase();
-
         query = "insert into article (title, date, source_link, description,"
                 + "username, image_url, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
 
-        preSta = trafficAccident.getConnection().prepareStatement(query);
+        preSta = connection.prepareStatement(query);
 
         preSta.setString(1, article.getTitle());
         preSta.setTimestamp(2, article.getDate());

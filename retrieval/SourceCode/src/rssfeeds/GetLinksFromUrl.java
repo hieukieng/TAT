@@ -127,7 +127,7 @@ public class GetLinksFromUrl {
             elements = tmp.select("a[href]");
 
             iterator = elements.iterator();
-            System.out.println("\npage " + i);
+            
             while (iterator.hasNext()) {
                 String s = iterator.next().attr("href");
                 if (!s.contains("/giao-thong/trang") && !s.contains("javascript")) {
