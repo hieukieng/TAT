@@ -3,7 +3,10 @@ package database;
 import java.sql.SQLException;
 import java.util.HashSet;
 import news.Article;
+import news.Article24hComVn;
+import news.ArticleBaoGiaoThongVn;
 import news.ArticleTinTucVn;
+import news.ArticleZingVn;
 import rssfeeds.GetLinksFromUrl;
 
 /**
@@ -17,32 +20,58 @@ public class Main {
     public static final String RSS_TIN_TUC_VN = "http://tintuc.vn/rss/giao-thong.rss";
 
     public static void main(String[] args) {
-        Article article = new ArticleTinTucVn();
 
         StoreInfo storeInfo = new StoreInfo();
 
         GetLinksFromUrl getLinksFromUrl = new GetLinksFromUrl();
         
-//            ArrayList<String> linksRss = null;
-//
-//            try {
-//                linksRss = RSSReader.getAllLink(RSS_TIN_TUC_VN);
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//
-//            try {
-//                storeInfo.storeArticles(article, linksRss);
-//            } catch (SQLException ex) {
-//                ex.printStackTrace();
-//            }
+        Article article;
+        
+         HashSet<String> links;
+         
+        //trang TinTucVn
+        article = new ArticleTinTucVn();
 
-        HashSet<String> links = getLinksFromUrl.getLinksFromTinTucVn(100, 174);
+        links = getLinksFromUrl.tinTucVn(1, 50);
 
         try {
             storeInfo.storeInfo(article, links);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        
+        //trang 24h.com.vn
+        article = new Article24hComVn();
+
+        links = getLinksFromUrl.website24h();
+
+        try {
+            storeInfo.storeInfo(article, links);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        //trang baogiaothong.vn
+        article = new ArticleBaoGiaoThongVn();
+
+        links = getLinksFromUrl.baoGiaoThongVn(1, 20);
+
+        try {
+            storeInfo.storeInfo(article, links);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        //trang zing.vn
+        article = new ArticleZingVn();
+
+        links = getLinksFromUrl.zingVn(1, 15);
+
+        try {
+            storeInfo.storeInfo(article, links);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
     }
 }
