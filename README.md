@@ -14,3 +14,9 @@
 - Setup webanno
 - Load thumbnail image instead of original image
 - Get time + location for summarizing + statistics
+
+8/12/16
+- HeatMap
+- Retrieval - web interface
+- WebAnno
+- Automatic location
