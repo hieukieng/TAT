@@ -2,7 +2,9 @@ package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.Iterator;
 import news.Article;
@@ -18,6 +20,7 @@ public class StoreInfo {
     private TrafficAccident trafficAccident;
     private Connection connection;
     private PreparedStatement preSta;
+    private Statement statement;
     private String query;
 
     public StoreInfo() {
@@ -29,43 +32,77 @@ public class StoreInfo {
         connection = trafficAccident.getConnection();
     }
 
+    /**
+     * Lưu thông tin của một bài viết vào cơ sở dữ liệu
+     * @param <E> Bài viết phải là một trong các kiểu dữ liệu
+     * kế thừa từ abstract class {@link news.Article}
+     * @param article bài viết cần lưu
+     * @throws SQLException nếu xảy ra lỗi khi lưu dữ liệu vào
+     * cơ sở dữ liệu
+     */
     public <E extends Article> void storeInfo(E article) throws SQLException {
 
-        query = "insert into article (title, date, source_link, description,"
-                + "username, image_url, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
+        String checkExist = "select id from article where source_link = '" + article.getUrl() + "'";
 
-        preSta = connection.prepareStatement(query);
+        statement = connection.createStatement();
 
-        preSta.setString(1, article.getTitle());
-        preSta.setTimestamp(2, article.getDate());
-        preSta.setString(3, article.getUrl());
-        preSta.setString(4, article.getDescription());
-        preSta.setString(5, null);
+        ResultSet rs = statement.executeQuery(checkExist);
 
-        if (article.getImageUrl() != null) {
-            preSta.setString(6, article.getImageUrl());
+        if (rs.next()) {
+            System.out.println("article is exist");
         } else {
-            preSta.setString(6, IMAGE_URL);
+            query = "insert into article (title, date, source_link, description,"
+                    + "username, image_url, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
+
+            preSta = connection.prepareStatement(query);
+
+            preSta.setString(1, article.getTitle());
+            preSta.setTimestamp(2, article.getDate());
+            preSta.setString(3, article.getUrl());
+            preSta.setString(4, article.getDescription());
+            preSta.setString(5, null);
+
+            if (article.getImageUrl() != null) {
+                preSta.setString(6, article.getImageUrl());
+            } else {
+                preSta.setString(6, IMAGE_URL);
+            }
+
+            preSta.setString(7, article.getContent());
+
+            preSta.executeUpdate();
+
+            System.out.println("Store information successfully");
         }
-
-        preSta.setString(7, article.getContent());
-
-        preSta.executeUpdate();
-
-        System.out.println("Store information successfully");
-
     }
 
+    /**
+     * Đóng toàn bộ kết nối gồm {@link java.sql.PreparedStatement} và
+     * kết nối đến cơ sở dữ liệu {@link java.sql.Connection}
+     */
     public void stop() {
         try {
             preSta.close();
+            connection.close();
+            trafficAccident.disconnectToDatabase();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         trafficAccident.disconnectToDatabase();
     }
 
+    /**
+     * Lưu thông tin của nhiều bài viết vào cơ sở dữ liệu
+     * @param <E> Bài viết phải là một trong các kiểu dữ liệu
+     * kế thừa từ abstract class {@link news.Article}
+     * @param <T> Danh sách các bài viết lưu trong kiểu dữ liệu kế
+     * thừa từ lớp {@link java.util.Collection}
+     * @param article kiểu bài viết cần lưu
+     * @param links tập hợp các bài viết
+     * @throws SQLException SQLException nếu xảy ra lỗi khi lưu dữ liệu vào
+     * cơ sở dữ liệu
+     */
     public <E extends Article, T extends Collection> void storeInfo(E article, T links) throws SQLException {
 
         for (Iterator iterator = links.iterator(); iterator.hasNext();) {

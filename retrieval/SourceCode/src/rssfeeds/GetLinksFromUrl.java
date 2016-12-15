@@ -29,6 +29,12 @@ public class GetLinksFromUrl {
     public GetLinksFromUrl() {
     }
 
+    /**
+     * Lấy dữ liệu của trang web lưu dưới dạng {@link org.jsoup.nodes.Document}
+     * từ địa chỉ {@code url} cụ thể sử dụng Jsoup với <b>time out</b> = 10s
+     * sử dụng agent <i>Chrome</i> 
+     * @param url của trang web cần lấy thông tin
+     */
     private void connectUrl(String url) {
         try {
             document = Jsoup.connect(url).timeout(10000).userAgent("Chrome").get();
@@ -139,13 +145,13 @@ public class GetLinksFromUrl {
     }
 
     /**
-     * Lấy links từ ""http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageBegin</b>"
-     * </ br>
-     * tới ""http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageEnd</b>" về chuyên
+     * Lấy links từ <i>"http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageBegin</b>"</i>
+     * <p> tới
+     * <p><i>"http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageEnd</b>"</i> về chuyên
      * mục giao thông
      * @param pageBegin nên bằng 1 để lấy tin mới nhất
      * @param pageEnd nên có giá trị tối đa là 50
-     * @return
+     * @return các links của trang web lưu trong {@link java.util.HashSet}
      */
     public HashSet<String> baoGiaoThongVn(int pageBegin, int pageEnd) {
 

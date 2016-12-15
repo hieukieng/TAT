@@ -10,15 +10,22 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.XMLEvent;
 
 /**
- * @author HAVIETTRANG
+ * @author Pha
  * @date Oct 20, 2016 10:35:25 AM
- * @website haviettrang.blogspot.com
  */
 public class RSSReader {
 
     private static final String ITEM = "item";
     private static final String LINK = "link";
 
+    /**
+     * lấy toàn bộ link bài viết từ RSS
+     *
+     * @param rssLink URL (địa chỉ) của RSS feed
+     * @return các link được lưu trong {@code ArratList<String>}
+     * @throws Exception nếu quá trình phân tích link gặp lỗi
+     * @see java.util.ArrayList
+     */
     public static ArrayList<String> getAllLink(String rssLink) throws Exception {
         ArrayList<String> links = new ArrayList<>();
 
