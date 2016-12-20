@@ -46,7 +46,7 @@ public class ArticleBaoGiaoThongVn extends Article {
 
         String s = elements.text().replace(" -", "");
 
-        String datetime = s.substring(s.indexOf("/") - 1, s.indexOf("/") + 14);
+        String datetime = s.substring(s.indexOf("/") - 2, s.indexOf("/") + 14);
 
         Date parseDate = null;
         try {
