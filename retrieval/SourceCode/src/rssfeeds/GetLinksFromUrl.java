@@ -31,8 +31,9 @@ public class GetLinksFromUrl {
 
     /**
      * Lấy dữ liệu của trang web lưu dưới dạng {@link org.jsoup.nodes.Document}
-     * từ địa chỉ {@code url} cụ thể sử dụng Jsoup với <b>time out</b> = 10s
-     * sử dụng agent <i>Chrome</i> 
+     * từ địa chỉ {@code url} cụ thể sử dụng Jsoup với <b>time out</b> = 10s sử
+     * dụng agent <i>Chrome</i>
+     *
      * @param url của trang web cần lấy thông tin
      */
     private void connectUrl(String url) {
@@ -54,13 +55,13 @@ public class GetLinksFromUrl {
         connectUrl(WEBSITE_24H_COM_VN);
 
         HashSet<String> links = new HashSet<>();
-        
+
         elements = document.getElementsByClass("colCenter");
-        
+
         Document tmp = Jsoup.parse(elements.toString());
-        
+
         elements = tmp.select("a[href]");
-        
+
         iterator = elements.iterator();
 
         while (iterator.hasNext()) {
@@ -93,7 +94,12 @@ public class GetLinksFromUrl {
         for (int i = pageBegin; i <= pageEnd; i++) {
             connectUrl("http://tintuc.vn/giao-thong?page=" + i);
 
-            elements = document.select("a[href]");
+            elements = document.getElementsByClass("list clearfix");
+
+            Document tmp = Jsoup.parse(elements.toString());
+
+            elements = tmp.select("a[href]");
+
             iterator = elements.iterator();
 
             while (iterator.hasNext()) {
@@ -133,7 +139,7 @@ public class GetLinksFromUrl {
             elements = tmp.select("a[href]");
 
             iterator = elements.iterator();
-            
+
             while (iterator.hasNext()) {
                 String s = iterator.next().attr("href");
                 if (!s.contains("/giao-thong/trang") && !s.contains("javascript")) {
@@ -145,10 +151,14 @@ public class GetLinksFromUrl {
     }
 
     /**
-     * Lấy links từ <i>"http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageBegin</b>"</i>
-     * <p> tới
-     * <p><i>"http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageEnd</b>"</i> về chuyên
-     * mục giao thông
+     * Lấy links từ
+     * <i>"http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageBegin</b>"</i>
+     * <p>
+     * tới
+     * <p>
+     * <i>"http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/p<b>pageEnd</b>"</i>
+     * về chuyên mục giao thông
+     *
      * @param pageBegin nên bằng 1 để lấy tin mới nhất
      * @param pageEnd nên có giá trị tối đa là 50
      * @return các links của trang web lưu trong {@link java.util.HashSet}

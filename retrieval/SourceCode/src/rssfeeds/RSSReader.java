@@ -10,7 +10,7 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.XMLEvent;
 
 /**
- * @author Pha
+ * @author Phạm Tuấn
  * @date Oct 20, 2016 10:35:25 AM
  */
 public class RSSReader {

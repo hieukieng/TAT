@@ -19,15 +19,15 @@ public class ArticleBaoGiaoThongVn extends Article {
     @Override
     protected StringBuilder parseContent() {
         StringBuilder content = new StringBuilder();
-        
+
         Elements pcelements = document.getElementsByTag("p");
-        
+
         Element scelement = document.getElementsByClass("signature").first();
-        
+
         int i = 0;
         for (Element pcelement : pcelements) {
             i++;
-            if ( (i == 1) || pcelement.text().contains("Xem thêm video")) {
+            if ((i == 1) || pcelement.text().contains("Xem thêm video")) {
                 continue;
             }
             if (pcelement == scelement) {
@@ -36,29 +36,18 @@ public class ArticleBaoGiaoThongVn extends Article {
                 content.append(pcelement.text());
             }
         }
-        
+
         return content;
     }
 
-    @Override   
+    @Override
     public Timestamp convertDateTime(Document document) {
-        Element dateElement = document.getElementsByTag("p").first();
-        String date;
-        String sdate = dateElement.text();
-        if(!sdate.contains("(GMT+7)")){
-            Elements divElements = document.getElementsByTag("div");
-            for(Element div : divElements){
-                if(div.text().contains("(GMT+7)")){                        
-                  sdate=div.text();                  
-                }
-            }
-               date = sdate;                
-            }
-        else {
-            date = dateElement.text();
-        }
-        String string = date.replace(" -","");
-        String datetime = string.substring(string.indexOf("/") - 2, string.indexOf("/") + 14);
+        Elements elements = document.select("div[class=font11 blue margin8_tb]");
+
+        String s = elements.text().replace(" -", "");
+
+        String datetime = s.substring(s.indexOf("/") - 1, s.indexOf("/") + 14);
+
         Date parseDate = null;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss:SSS");
