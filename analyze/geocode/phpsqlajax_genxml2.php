@@ -21,11 +21,12 @@ if (!$connection) {
 $db_selected = mysqli_select_db( $connection,$database);
 if (!$db_selected) {
     die ('Cant use db: ' . mysqli_error());
-    echo 'alert("Ko the connect")';
 }
 //select all row in the marker tables
 mysqli_query($connection,"SET NAMES 'UTF8'");
+
 $query = "SELECT * FROM location";
+
 $result = mysqli_query($connection,$query);
 
 if (!$result) {
@@ -34,20 +35,27 @@ if (!$result) {
 
 header("Content-type: text/xml");
 
-// Start XML file, echo parent node
 echo '<markers>';
+
 // Iterate through the rows, printing XML nodes for each
+
 while ($row = @mysqli_fetch_assoc($result)) {
     // ADD TO XML DOCUMENT NODE
 
     echo '<marker ';
     echo 'id="' . $row['id'] . '" ';
     echo 'name="' . $row['name'] . '" ';
+    echo 'fulltime="' . $row['fulltime'] . '" ';
     echo '/>';
 }
 
 // End XML file
 echo '</markers>';
 mysqli_close($connection);
+
+//if($_REQUEST['datepicker']){
+//    echo $_POST['datepicker'];
+//}
+
 ?>
 
