@@ -1,0 +1,73 @@
+/*Man hinh browser*/
+*{ margin: 0px; padding: 0px; }
+
+
+/*Wrapper*/
+#wrapper{ width: 1200px; height: 1300px; margin: auto; color: #000;}
+
+
+/*Banner*/
+#banner{ width: 1200px; height: 140px; margin: auto; margin-top: 0px; padding: 0px; 200px; }
+
+
+/*Menu*/
+li{list-style: none;}
+#menu{ width: 1200px;height: 35px; background:#06F; margin-top: 0px;}
+#menu a{text-decoration: none;color: #FFF;font-size: 18px;}
+#menu-bar{width: 800px;height: 35px;background: #03F;float: left;}
+#search{width: 400px;height: 35px;float: left;float: left;	}
+#search #search_cell{width: 300px; height: 33px; float: left;}
+#search #search_button{width: 95px; height: 35px; margin: 0px 0px; float: left;}
+#menu-bar>ul>li{width: 159px;float: left;display: inherit; background: #03F;position: relative; text-align: center;}
+#menu-bar>ul>li>ul{display: none;position: absolute;background: #03F;}
+#menu-bar>ul>li>ul>li{text-align: center;width: 159px;height: 35px;}
+#menu-bar>ul>li:hover ul{display: block;}
+#menu-bar ul li:hover{ background: #94A9FE;}
+
+
+
+/*Content*/
+#content{width: 1200px;height: 1100px; margin-top: 0px; background: #A4FFA4; }
+/*Left*/
+#left{width: 800px; height:1100px; float: left;}
+#num_of_news{width: 800px; height: 20px; float: left; }
+#list_news{width: 800px; height:1060px; float: left;}
+a{text-decoration: none; color: #000;}
+#box_news{width: 780px; height: 200px; background:#0FF; margin: 10px 10px;}
+#box_news td{font-size: 18px;}
+#box_news #news_title{width: inherit; height: 30px; background: #A6D2FF; float: left; font-size: 20px; line-height:30px; }
+#box_news #news_image{width: 160px; height: 170px; float: left;}
+#box_news #news_summary{width: 620px; height: 170px; background: #A6D2FF; float: left; }
+#box_news #news_summary #short_cell{width: 310px; height:20px; }
+#box_news #news_summary #long_cell{width: 620px; height:40px; }
+#box_news #news_summary li{ line-height: 30px; }
+
+
+/*pagination*/
+#left #pagination{width: 620x; height: 20px; margin: 0px 80px; float:left; }
+#left #pagination input#page_button{ width:30px; margin: 0px 2px;}
+#left #pagination input#page_button_current{ width:30px; margin: 0px 2px; background:#0C9; }
+
+/*Right*/
+#right{width: 400px; height:1100px; background:#C1C1FF; float: left;}
+#right td#chart{width: 400px; height: 200px;}
+ 
+/*Footer*/
+#footer{width:1200px;height: 25px; background: #D2D2D2; margin-bottom: 0px;}
+
+/*statistics*/
+#wrapper_statistics{ width: 1200px; height: 880px; margin: auto; color: #000;}
+#content_statistics{width: 1200px;height: 660px; margin-top: 0px; background: #A4FFA4; }
+#time_option{width: 1200px; height: 100px;}
+#time_option1{width: 400px; height: inherit; float: left;}
+#time_option2{width: 800px; height: inherit; float: left;}
+
+#map{width: 600px; height: 560px; background: #0CF; float: left;}
+#map #image_map{width: inherit; height: 530px;}
+#map #title_map{width: inherit; height: 30px; background: #063;}
+
+#chart{width: 600px; height: 560px; background: #9C6; float: left;}
+#chart #image_chart{width: inherit; height: 530px;}
+#chart #title_chart{width: inherit; height: 30px; background: #399;}
+
+#footer_statistics{width:1200px;height: 25px; background: #CCC; margin-bottom: 0px;}
