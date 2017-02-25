@@ -108,7 +108,7 @@ public abstract class Article {
      */
     protected void connectUrl(String url) {
         try {
-            document = Jsoup.connect(url).timeout(10000).userAgent("Chrome").get();
+            document = Jsoup.connect(url).timeout(10000).userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36").get();
         } catch (IOException ex) {
             System.out.println("Can't connect to website " + url);
             ex.printStackTrace();
