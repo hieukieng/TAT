@@ -3,7 +3,9 @@ package news;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
@@ -23,14 +25,11 @@ public class ArticleTinTucVn extends Article{
     protected StringBuilder parseContent() {
         StringBuilder content = new StringBuilder();
         
-        elements = document.getElementsByClass("news-content-excerpt");
-
-        content.append(elements.text());
-
-        elements = document.getElementsByClass("content-post");
-
-        content.append(elements.text());
-        
+        elements = document.select("div[class=\"article-body col  w504 pull-right\"] p");
+        for (Iterator<Element> i = elements.iterator(); i.hasNext();) {
+            Element next = i.next();
+            content.append(next.text());
+        }
         return content;
     }
 

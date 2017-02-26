@@ -4,6 +4,7 @@ package news;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -29,15 +30,17 @@ public class Article24hComVn extends Article{
         StringBuilder content = new StringBuilder(elements.text());
         
         elements = document.getElementsByClass("text-conent");
-
-        String conent = elements.text();
-
-        //Lay phan bai viet lien quan
-        Element lienQuan = document.getElementsByAttributeValue("class", "baiviet-bailienquan").first();
-
-        //Xoa phan bai viet lien quan roi them vao content
-        content.append(conent.replace(lienQuan.text(), ""));
+        elements = elements.first().children();
         
+        Iterator<Element> i = elements.iterator();
+        
+        while(i.hasNext()) {
+            Element e = i.next();
+            if (!e.hasClass("baiviet-bailienquan") && !e.hasAttr("style")) {
+                content.append(e.text());
+            }
+        }
+
         return content;
     }
 

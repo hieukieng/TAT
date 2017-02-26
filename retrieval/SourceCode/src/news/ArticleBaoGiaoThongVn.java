@@ -3,6 +3,7 @@ package news;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -20,20 +21,13 @@ public class ArticleBaoGiaoThongVn extends Article {
     protected StringBuilder parseContent() {
         StringBuilder content = new StringBuilder();
 
-        Elements pcelements = document.getElementsByTag("p");
+        Elements elements = document.select("p[style=\"text-align: justify;\"]");
 
-        Element scelement = document.getElementsByClass("signature").first();
-
-        int i = 0;
-        for (Element pcelement : pcelements) {
-            i++;
-            if ((i == 1) || pcelement.text().contains("Xem thêm video")) {
-                continue;
-            }
-            if (pcelement == scelement) {
-                break;
-            } else {
-                content.append(pcelement.text());
+        Iterator<Element> i = elements.iterator();
+        while (i.hasNext()) {
+            Element next = i.next();
+            if (!next.text().contains("Xem thêm video") && !next.hasClass("figure")) {
+                content.append(next.text());
             }
         }
 

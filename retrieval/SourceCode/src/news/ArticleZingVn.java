@@ -26,13 +26,12 @@ public class ArticleZingVn extends Article {
         elements = document.getElementsByClass("the-article-summary");
 
         StringBuilder content = new StringBuilder(elements.text());
-        elements = document.getElementsByClass("the-article-body");
-        String conent = elements.text();
 
-        //loai bo phan thua
-        Elements lienQuan = document.getElementsByClass("inner-article");
-
-        content.append(conent.replace(lienQuan.text(), ""));
+        //Lay cac noi dung chi tiet cua bai bao tai cac the p nam trong class "the-article-body cms-body"
+        Elements detailContent = document.select("div[class=\"the-article-body cms-body\"] p");
+        detailContent.stream().forEach((e) -> {
+            content.append(e.text());
+        });
         
         return content;
     }
