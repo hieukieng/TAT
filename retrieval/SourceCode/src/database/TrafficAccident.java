@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * @author HAVIETTRANG
  */
 public class TrafficAccident {
-    public static final String DATABASE = "jdbc:mysql://localhost:3306/traffic_accident";
+    public static final String DATABASE = "jdbc:mysql://localhost:3306/traffic_accident?autoReconnect=true&useSSL=false";
     public static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "mysqldatabase";

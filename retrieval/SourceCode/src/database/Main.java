@@ -5,6 +5,7 @@ import java.util.HashSet;
 import news.Article;
 import news.Article24hComVn;
 import news.ArticleBaoGiaoThongVn;
+import news.ArticleNldComVn;
 import news.ArticleTinTucVn;
 import news.ArticleZingVn;
 import rssfeeds.GetLinksFromUrl;
@@ -34,32 +35,30 @@ public class Main {
     /**
      * lưu một số bài viết từ 4 trang web {@link news.ArticleTinTucVn},
      * {@link news.ArticleBaoGiaoThongVn}, {@link news.Article24hComVn},
-     * {@link news.ArticleZingVn}
+     * {@link news.ArticleZingVn}, {@link news.ArticleNldComVn}
      * 
      * @see #saveArticlesTinTucVn() 
      * @see #saveArticlesBaoGiaoThongVn() 
      * @see #saveArticle24hComVn() 
      * @see #saveArticlesZingVn() 
+     * @see #saveArticleNldComVn() 
      */
     public void saveAll() {
         saveArticlesTinTucVn();
         saveArticlesBaoGiaoThongVn();
         saveArticle24hComVn();
-        saveArticlesZingVn();
+//        saveArticlesZingVn();
+        saveArticleNldComVn();
     }
 
     /**
      * Lấy một số lượng bài viết từ trang <a href="http://tintuc.vn/giao-thong">
      * http://tintuc.vn/giao-thong</a>
      * <p> khi truyền tham số vào trong hàm {@link rssfeeds.GetLinksFromUrl#tinTucVn(int, int) }
-     * lần lượt là 1 và 5.
+     * lần lượt là 1 và 10.
      */
     public void saveArticlesTinTucVn() {
-        article = new ArticleTinTucVn();
-
-        links = getLinksFromUrl.tinTucVn(1, 5);
-
-        store();
+        saveArticlesTinTucVn(1, 10);
     }
     /**
      * Lấy một số lượng bài viết từ trang <a href="http://tintuc.vn/giao-thong">
@@ -100,14 +99,10 @@ public class Main {
      * <a href="http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/">
      * http://www.baogiaothong.vn/tin-tuc-tai-nan-giao-thong-moi-nhat-trong-ngay--hinh-anh-video-clip-tngt-channel30/</a>
      * <p> khi truyền tham số vào trong hàm {@link rssfeeds.GetLinksFromUrl#baoGiaoThongVn(int, int) }
-     * lần lượt là 1 và 5.
+     * lần lượt là 1 và 10.
      */
     public void saveArticlesBaoGiaoThongVn() {
-        article = new ArticleBaoGiaoThongVn();
-
-        links = getLinksFromUrl.baoGiaoThongVn(1, 5);
-
-        store();
+        saveArticlesBaoGiaoThongVn(1, 5);
     }
     
     /**
@@ -143,14 +138,10 @@ public class Main {
      * Lấy một số lượng bài viết từ trang <a href="http://news.zing.vn/giao-thong.html">
      * http://news.zing.vn/giao-thong.html</a>
      * <p> khi truyền tham số vào trong hàm {@link rssfeeds.GetLinksFromUrl#zingVn(int, int)  }
-     * lần lượt là 1 và 5.
+     * lần lượt là 1 và 10.
      */
     public void saveArticlesZingVn() {
-        article = new ArticleZingVn();
-
-        links = getLinksFromUrl.zingVn(1, 5);
-
-        store();
+        saveArticlesZingVn(1, 10);
     }
 
     /**
@@ -189,5 +180,30 @@ public class Main {
         Main main = new Main();
         main.saveAll();
         main.stop();
+    }
+
+    /**
+     * Lấy một số lượng bài viết từ trang <a href="http://nld.com.vn/tai-nan-giao-thong.html">
+     * http://nld.com.vn/tai-nan-giao-thong.html</a>
+     * <p> khi truyền tham số vào trong hàm {@link rssfeeds.GetLinksFromUrl#nldComVn(int, int)  }
+     * lần lượt là 1 và 10.
+     */
+    private void saveArticleNldComVn() {
+        saveArticleNldComVn(1, 10);
+    }
+
+    /**
+     * Lấy một số lượng bài viết từ trang <a href="http://nld.com.vn/tai-nan-giao-thong.html">
+     * http://nld.com.vn/tai-nan-giao-thong.html</a>
+     * <p> khi truyền tham số vào trong hàm {@link rssfeeds.GetLinksFromUrl#nldComVn(int, int)  }
+     * @param pageBegin tham số thứ nhất
+     * @param pageEnd tham số thứ hai
+     */
+    private void saveArticleNldComVn(int pageBegin, int pageEnd) {
+        article = new ArticleNldComVn();
+
+        links = getLinksFromUrl.nldComVn(pageBegin, pageEnd);
+
+        store();
     }
 }

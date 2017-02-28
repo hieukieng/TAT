@@ -22,6 +22,7 @@ public class StoreInfo {
     private PreparedStatement preSta;
     private Statement statement;
     private String query;
+    private static int alreadyExists, successes;
 
     public StoreInfo() {
 
@@ -30,6 +31,7 @@ public class StoreInfo {
         trafficAccident.connectToDatabase();
 
         connection = trafficAccident.getConnection();
+        alreadyExists = successes = 0;
     }
 
     /**
@@ -46,33 +48,33 @@ public class StoreInfo {
 
         statement = connection.createStatement();
 
-        ResultSet rs = statement.executeQuery(checkExist);
-
-        if (rs.next()) {
-            System.out.println("article is exist");
-        } else {
-            query = "insert into article (title, date, source_link, description,"
-                    + "username, image_url, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
-
-            preSta = connection.prepareStatement(query);
-
-            preSta.setString(1, article.getTitle());
-            preSta.setTimestamp(2, article.getDate());
-            preSta.setString(3, article.getUrl());
-            preSta.setString(4, article.getDescription());
-            preSta.setString(5, null);
-
-            if (article.getImageUrl() != null) {
-                preSta.setString(6, article.getImageUrl());
+        try (ResultSet rs = statement.executeQuery(checkExist)) {
+            if (rs.next()) {
+                System.out.println("article is exist: " + article.getUrl());
+                alreadyExists++;
             } else {
-                preSta.setString(6, IMAGE_URL);
+                query = "insert into article (title, date, source_link, description,"
+                        + "username, image_url, content)" + "values (?, ?, ?, ?, ?, ?, ?)";
+                
+                preSta = connection.prepareStatement(query);
+                
+                preSta.setString(1, article.getTitle());
+                preSta.setTimestamp(2, article.getDate());
+                preSta.setString(3, article.getUrl());
+                preSta.setString(4, article.getDescription());
+                preSta.setString(5, null);
+                
+                if (article.getImageUrl() != null) {
+                    preSta.setString(6, article.getImageUrl());
+                } else {
+                    preSta.setString(6, IMAGE_URL);
+                }
+                
+                preSta.setString(7, article.getContent());
+                
+                preSta.executeUpdate();
+                successes++;
             }
-
-            preSta.setString(7, article.getContent());
-
-            preSta.executeUpdate();
-
-            System.out.println("Store information successfully");
         }
     }
 
@@ -84,12 +86,13 @@ public class StoreInfo {
         try {
             preSta.close();
             connection.close();
-            trafficAccident.disconnectToDatabase();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            trafficAccident.disconnectToDatabase();
+            System.out.println(alreadyExists + " articles already exist.");
+            System.out.println(successes + " articles are stored successfully.");
         }
-
-        trafficAccident.disconnectToDatabase();
     }
 
     /**

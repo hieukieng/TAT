@@ -185,4 +185,43 @@ public class GetLinksFromUrl {
         }
         return links;
     }
+    
+    /**
+     * Lấy links từ
+     * <i>"http://nld.com.vn/tai-nan-giao-thong/trang-<b>pageBegin</b>.html"</i>
+     * <p>
+     * tới
+     * <p>
+     * <i>"http://nld.com.vn/tai-nan-giao-thong/trang-<b>pageEnd</b>.html"</i>
+     * về chuyên mục giao thông
+     *
+     * @param pageBegin nên bằng 1 để lấy tin mới nhất
+     * @param pageEnd nên có giá trị tối đa là 250
+     * @return các links của trang web lưu trong {@link java.util.HashSet}
+     */
+    public HashSet<String> nldComVn(int pageBegin, int pageEnd) {
+
+        HashSet<String> links = new HashSet<>();
+
+        String url = "http://nld.com.vn/tai-nan-giao-thong/trang-";
+
+        for (int i = pageBegin; i <= pageEnd; i++) {
+            connectUrl(url + i + ".html");
+
+            elements = document.select("div[class=\"tagsall1\"]");
+            
+            elements = elements.select("a[href]");
+
+            iterator = elements.iterator();
+            
+            while (iterator.hasNext()) {
+                StringBuilder sb = new StringBuilder(iterator.next().attr("href"));
+                
+                if (sb.toString().contains("thoi-su-trong-nuoc/")) {
+                    links.add(sb.insert(0, "http://nld.com.vn").toString());
+                }
+            }
+        }
+        return links;
+    }
 }
