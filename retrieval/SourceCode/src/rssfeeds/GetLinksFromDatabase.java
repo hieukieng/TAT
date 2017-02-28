@@ -85,4 +85,17 @@ public class GetLinksFromDatabase {
         return links;
     }
     
+    public static HashSet<String> websiteNldComVn() {
+        String query = "select source_link from article where source_link like \"%nld.com.vn%\"";
+        
+        HashSet<String> links = null;
+        try {
+            links = website(query);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return links;
+    }
+    
 }

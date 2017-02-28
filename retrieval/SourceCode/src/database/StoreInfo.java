@@ -110,7 +110,12 @@ public class StoreInfo {
 
         for (Iterator iterator = links.iterator(); iterator.hasNext();) {
             String url = (String) iterator.next();
-            article.parseUrl(url);
+            
+            try {
+                article.parseUrl(url);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             try {
                 storeInfo(article);

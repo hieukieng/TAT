@@ -86,6 +86,7 @@ public abstract class Article {
      */
     public void parseUrl(String url) {
         connectUrl(url);
+        System.out.println(url);
 
         title = document.title().trim();
 
